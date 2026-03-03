@@ -30,18 +30,18 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/my-website:latest
             ${{ secrets.DOCKER_USERNAME }}/my-website:${{ github.sha }}
 
-- name: Update manifest in ArgoCD repo
-  env:
-    TOKEN: ${{ secrets.GIT_TOKEN }}
-  run: |
-    git clone https://snowbobr:${TOKEN}@github.com/snowbobr/argocd-configs.git
-    
-    cd ArgoCD/apps/app1/overlays/dev
-    sed -i "s|image:.*|image: snowbobr/my-website:${{ github.sha }}|g" deployment.yaml
-    
-    git config user.name "GitHub Actions"
-    git config user.email "actions@github.com"
-    git add .
-    git commit -m "Update image to ${{ github.sha }}"
-    
-    git push https://snowbobr:${TOKEN}@github.com/snowbobr/argocd-configs.git
+      - name: Update manifest in ArgoCD repo
+        env:
+          TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: |
+          git clone https://snowbobr:${TOKEN}@github.com/snowbobr/argocd-configs.git
+          
+          cd ArgoCD/apps/app1/overlays/dev
+          sed -i "s|image:.*|image: snowbobr/my-website:${{ github.sha }}|g" deployment.yaml
+          
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Update image to ${{ github.sha }}"
+          
+          git push https://snowbobr:${TOKEN}@github.com/snowbobr/argocd-configs.git
