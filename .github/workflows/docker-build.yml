@@ -34,9 +34,9 @@ jobs:
         env:
           TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
-          git clone https://snowbobr:${TOKEN}@github.com/snowbobr/argocd-configs.git
+          git clone https://snowbobr:${TOKEN}@github.com/snowbobr/ArgoCD.git
           
-          cd ArgoCD/apps/app1/overlays/dev
+          cd ArgoCD/apps/app1/base
           sed -i "s|image:.*|image: snowbobr/my-website:${{ github.sha }}|g" deployment.yaml
           
           git config user.name "GitHub Actions"
@@ -44,4 +44,4 @@ jobs:
           git add .
           git commit -m "Update image to ${{ github.sha }}"
           
-          git push https://snowbobr:${TOKEN}@github.com/snowbobr/argocd-configs.git
+          git push https://snowbobr:${TOKEN}@github.com/snowbobr/ArgoCD.git
