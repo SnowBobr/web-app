@@ -1,10 +1,185 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K8s Magic App</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 600px;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        h1:first-child {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .version-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 20px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .version-number {
+            font-size: 2em;
+            margin-left: 10px;
+            background: white;
+            color: #667eea;
+            padding: 5px 15px;
+            border-radius: 30px;
+        }
+        .author {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #ddd;
+            font-size: 1.2em;
+        }
+        .author span {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.4em;
+            text-shadow: 1px 1px 2px rgba(102, 126, 234, 0.3);
+        }
+        .pod-animation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .pod {
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(135deg, #48c6ef 0%, #6f86d6 100%);
+            border-radius: 10px;
+            animation: float 3s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .pod:nth-child(2) { animation-delay: 0.5s; }
+        .pod:nth-child(3) { animation-delay: 1s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .pod-label {
+            margin-top: 5px;
+            font-size: 0.7em;
+            opacity: 0.8;
+        }
+        .cluster-info {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            text-align: left;
+        }
+        .cluster-info p {
+            margin: 5px 0;
+            color: #333;
+        }
+        .cluster-info .label {
+            color: #667eea;
+            font-weight: bold;
+        }
+        .status {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Hello From Kubernetes</h1>
+        
+        <div class="pod-animation">
+            <div class="pod">
+                <span>🐳</span>
+                <div class="pod-label">Pod 1</div>
+            </div>
+            <div class="pod">
+                <span>🐳</span>
+                <div class="pod-label">Pod 2</div>
+            </div>
+            <div class="pod">
+                <span>🐳</span>
+                <div class="pod-label">Pod 3</div>
+            </div>
+        </div>
 
+        <div class="version-badge">
+            <span>📦 Application version:</span>
+            <span class="version-number">0.0.5</span>
+        </div>
 
-<h1>Hello From Kubernetes</h1><br>;
+        <div class="cluster-info">
+            <p><span class="label">📡 Cluster:</span> Production</p>
+            <p><span class="label">☸️ Namespace:</span> app1-prod</p>
+            <p><span class="label">🔄 Deployment:</span> Rolling update</p>
+            <p><span class="label">⚡ Status:</span> <span class="status"></span>Healthy</p>
+            <p><span class="label">🎯 Replicas:</span> 3/3 ready</p>
+        </div>
 
-<h1>Application version: 0.0.4</h1><br>;
+        <div class="author">
+            Made with <span>❤️</span> by <span>Vasyl Lavrishchev</span>
+        </div>
 
+        <div style="margin-top: 20px; font-size: 0.8em; color: #999;">
+            <span>🔄 ArgoCD Synced</span> | 
+            <span>⏱️ Last deployed: <span id="timestamp"></span></span>
+        </div>
+    </div>
 
-Made by <font color=blue>Vasyl Lavrishchev;
-?>
+    <script>
+        // Add the current time
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        
+        // Add a console greeting for developers
+        console.log('%c🚀 Kubernetes App Deployed!', 'color: #667eea; font-size: 16px; font-weight: bold;');
+        console.log('%cVersion: 0.0.4', 'color: #764ba2; font-size: 14px;');
+        console.log('%cMade by Vasyl Lavrishchev', 'color: #48c6ef; font-size: 12px;');
+    </script>
+</body>
+</html>
